@@ -2,14 +2,23 @@ var video;
 
 window.addEventListener("load", function() {
 	console.log("Good job opening the window")
+	
+	
 	video = document.getElementById("player1");
 	var buttonPlay = document.getElementById("play");
 	var volumeText = document.getElementById('volume');
+	var volControl = document.getElementById('slider');
+	
+	var setVol = function() {
+		video.volume = this.value / 100;
+		volumeText.textContent = this.value + "%";
+		console.log("Changed volume to " + this.value)
+	};
+	
     buttonPlay.addEventListener("click", function() {
         video.play();
-		volumeText.textContent = "100%"
 		console.log("Play")
-		
+		volumeText.textContent = slider.value + "%";
     });
 	var buttonPause = document.getElementById("pause");
     buttonPause.addEventListener("click", function() {
@@ -30,21 +39,19 @@ window.addEventListener("load", function() {
 	
 	var buttonSkip = document.getElementById("skip");
 	buttonSkip.addEventListener("click", function() {
-		video.currentTime=video.currentTime + 15;
 		video.addEventListener('ended', function(){
 			video.currentTime = 0;
+			console.log("Restarting")
+			console.log("New location " + video.currentTime)
 			video.play();
 		  });
-		console.log(video.currentTime)
+		console.log("Original location " +video.currentTime)
+		video.currentTime=video.currentTime + 15;
+		console.log("New location " + video.currentTime)
+		
 	})
 
-	var volControl = document.getElementById('slider');
 	
-	var setVol = function() {
-		video.volume = this.value / 100;
-		volumeText.textContent = this.value + "%";
-		console.log("Changed volume to " + this.value)
-	};
 
 	volControl.addEventListener('change', setVol);
 	volControl.addEventListener('input', setVol);
